@@ -15,7 +15,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         Book Book = new Book();
-
+        BookMain bookMain = new BookMain();
 
       do {
           System.out.println(ConsoleColors.BROWN_BACKGROUND+ConsoleColors.WHITE_BOLD_BRIGHT+"Welcome to Book Library : "+ ConsoleColors.RESET);
@@ -27,7 +27,7 @@ public class Main {
           int ch = sc.nextInt();
           switch (ch) {
               case 1:
-                 BookMain.BookMenu();
+                 bookMain.BookMenu();
                   break;
               case 2:
                   int id=1;

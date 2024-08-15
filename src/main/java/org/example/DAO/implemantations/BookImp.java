@@ -12,6 +12,7 @@ public interface BookImp {
   boolean removeBook(int bookId);
   BookEntitie getBook(int id);
   List<BookEntitie> getAllBooks();
+  boolean updateBook(BookEntitie book);
 
 
 }

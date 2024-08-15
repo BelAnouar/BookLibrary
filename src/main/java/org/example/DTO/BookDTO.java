@@ -1,26 +1,28 @@
-package org.example.Entites;
+package org.example.DTO;
 
-public class BookEntitie {
+public class BookDTO {
+
     private int id;
     private String title;
     private Long ISBN;
     private String author;
 
 
-    public BookEntitie(String title, Long ISBN, String author) {
+    public BookDTO(String title, Long ISBN, String author) {
         this.title = title;
         this.ISBN = ISBN;
         this.author = author;
     }
 
-    public BookEntitie(int id, String title, Long ISBN, String author) {
+    public BookDTO(int id, String title, Long ISBN, String author) {
         this.id = id;
         this.title = title;
         this.ISBN = ISBN;
         this.author = author;
 
     }
-    public BookEntitie() {
+
+    public BookDTO() {
     }
 
     public int getId() {
@@ -54,5 +56,11 @@ public class BookEntitie {
     public void setAuthor(String author) {
         this.author = author;
     }
-
+    @Override
+    public String toString() {
+        return "{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                '}';
+    }
 }

@@ -1,7 +1,7 @@
 package org.example.DAO;
 
 import org.example.DAO.implemantations.BookImp;
-import org.example.DataBase.DBConnection;
+import org.example.utils.DBConnection;
 import org.example.Entites.BookEntitie;
 
 
@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Book implements BookImp {
      private static  Connection connection;
@@ -25,9 +26,11 @@ public class Book implements BookImp {
 
     @Override
     public boolean addBook(BookEntitie book) {
+        Random random = new Random();
+        int randomInt = random.nextInt();
         try{
             PreparedStatement ps = connection.prepareStatement("insert into Book (id,author,title ,ISBN)  values(?,?,?,?)");
-            ps.setInt(1, 1);
+            ps.setInt(1, randomInt);
             ps.setString(2,book.getAuthor());
             ps.setString(3,book.getTitle());
             ps.setLong(4,book.getISBN());
@@ -60,22 +63,21 @@ public class Book implements BookImp {
 
     @Override
     public BookEntitie getBook(int id) {
+
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM Book WHERE id = ?");
             ps.setInt(1,id);
             ResultSet result = ps.executeQuery();
-            BookEntitie BookE= new BookEntitie();
-            while (result.next()){
-              BookE.setId(result.getInt("id"));
-              BookE.setAuthor(result.getString("author"));
-              BookE.setTitle(result.getString("title"));
-              BookE.setISBN(result.getLong("ISBN"));
+
+            if (result.next()){
+               return extractBookFromResultSet(result);
             }
-            return BookE;
+
         } catch (SQLException e) {
             e.printStackTrace();
            return null;
         }
+        return null;
     }
 
     @Override
@@ -85,12 +87,7 @@ public class Book implements BookImp {
            ResultSet result = ps.executeQuery();
            List<BookEntitie> Books= new ArrayList<BookEntitie>();
            while (result.next()){
-               BookEntitie BookE= new BookEntitie();
-               BookE.setId(result.getInt("id"));
-               BookE.setAuthor(result.getString("author"));
-               BookE.setTitle(result.getString("title"));
-               BookE.setISBN(result.getLong("ISBN"));
-               Books.add(BookE);
+               Books.add(extractBookFromResultSet(result));
            }
            return Books;
        }catch (Exception e) {
@@ -98,5 +95,34 @@ public class Book implements BookImp {
            return null;
        }
 
+    }
+
+    public boolean updateBook(BookEntitie bookEntitie) {
+        try {
+            PreparedStatement ps = connection.prepareStatement(
+                    "UPDATE Book SET author = ?, title = ?, ISBN = ? WHERE id = ?"
+            );
+            ps.setString(1, bookEntitie.getAuthor());
+            ps.setString(2, bookEntitie.getTitle());
+            ps.setLong(3, bookEntitie.getISBN());
+            ps.setInt(4, bookEntitie.getId());
+
+            int result = ps.executeUpdate();
+            return result == 1;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    private BookEntitie extractBookFromResultSet(ResultSet rs) throws SQLException {
+        BookEntitie book = new BookEntitie();
+        book.setId(rs.getInt("id"));
+        book.setAuthor(rs.getString("author"));
+        book.setTitle(rs.getString("title"));
+        book.setISBN(rs.getLong("ISBN"));
+        return book;
     }
 }
