@@ -23,8 +23,11 @@ pipeline {
         }
         stage('Build') {
                    steps {
+
                        sh 'mvn dependency:go-offline -B'
+                       sh 'mvn -B -DskipTests clean package'
                        sh 'mvn clean package -X'
+
                    }
          }
 
