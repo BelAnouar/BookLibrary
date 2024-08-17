@@ -25,8 +25,7 @@ pipeline {
                    steps {
 
                        sh 'mvn dependency:go-offline -B'
-
-                       sh 'mvn clean package -X'
+                       sh 'mvn -B -DskipTests clean package'
 
 
                    }
