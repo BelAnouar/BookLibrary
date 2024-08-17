@@ -21,8 +21,8 @@ pipeline {
         stage('Build') {
                     steps {
 
-                           sh 'mvn clean package -X'
-                           sh 'mvn -B -DskipTests clean package'
+                           sh 'docker build -t BookLibrary .'
+                           sh 'docker run BookLibrary'
 
                     }
         }
