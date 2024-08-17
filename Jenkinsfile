@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                dir("/var/lib/jenkins/workspace/Book/Book") {
+                dir("/var/lib/jenkins/workspace/Book") {
                 sh 'mvn dependency:go-offline -B'
                 sh 'mvn clean package -X'
                 }
