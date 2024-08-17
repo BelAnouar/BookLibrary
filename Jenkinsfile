@@ -19,13 +19,15 @@ pipeline {
                    }
         }
         stage('Build') {
-                    steps {
-
-                           sh 'docker build -t BookLibrary .'
-                           sh 'docker run BookLibrary'
-
-                    }
-        }
+                   steps {
+                       sh '''
+                           export DOCKER_CERT_PATH=/path/to/certs
+                           export DOCKER_TLS_VERIFY=1
+                           docker build -t BookLibrary .
+                           docker run BookLibrary
+                       '''
+                   }
+               }
      }
     post {
        always {
