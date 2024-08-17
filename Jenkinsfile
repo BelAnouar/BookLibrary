@@ -5,7 +5,7 @@ pipeline {
         jdk "jdk"
     }
     environment {
-        JAVA_HOME = "/opt/java/openjdk"
+        JAVA_HOME = "/usr/lib/jvm/java-18-openjdk-amd64"
         PATH = "${JAVA_HOME}/bin:${M2_HOME}/bin:${env.PATH}"
     }
     stages {
