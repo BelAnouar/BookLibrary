@@ -25,8 +25,8 @@ pipeline {
                    steps {
 
                        sh 'mvn dependency:go-offline -B'
-                       sh 'mvn clean package'
-                       sh 'mvn clean install'
+
+                       sh 'mvn clean package -X'
 
 
                    }
