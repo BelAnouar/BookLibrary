@@ -13,21 +13,22 @@ pipeline {
             }
         }
 
-        stage('Check Directory') {
+        stage('check version java') {
                     steps {
-                        sh 'ls '
+                        sh '''
+                            env | grep -e PATH -e JAVA_HOME
+                            java -version
+                        '''
                    }
         }
         stage('Build') {
                    steps {
                        sh '''
-                           export DOCKER_CERT_PATH=/path/to/certs
-                           export DOCKER_TLS_VERIFY=1
-                           docker build -t BookLibrary .
-                           docker run BookLibrary
+                        echo 'build'
                        '''
                    }
-               }
+         }
+
      }
     post {
        always {
