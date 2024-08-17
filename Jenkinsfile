@@ -15,12 +15,12 @@ pipeline {
 
         stage('Check Directory') {
                     steps {
-                        sh 'ls /var/lib/jenkins/workspace/Book/'
+                        sh 'ls '
                    }
         }
         stage('Build') {
                     steps {
-                        dir("/var/lib/jenkins/workspace/Book/") {
+                        dir("/var/lib/jenkins/workspace/Book") {
 
                         sh 'mvn dependency:go-offline -B'
                         sh 'mvn clean package -X'
